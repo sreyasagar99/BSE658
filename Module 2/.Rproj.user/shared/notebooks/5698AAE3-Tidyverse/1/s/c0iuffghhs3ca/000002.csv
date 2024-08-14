@@ -1,0 +1,11 @@
+"0","```r
+# Using nrow()  and ncol() base R functions to view the number of rows and columns for the data
+nrow(covid_testdata)
+```"
+"1","[1] 14098
+"
+"0","```r
+ncol(covid_testdata)
+```"
+"1","[1] 5
+"

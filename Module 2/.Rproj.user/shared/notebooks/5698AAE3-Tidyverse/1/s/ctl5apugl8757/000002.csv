@@ -1,0 +1,5 @@
+"0","```r
+# converting the data to tibble
+covid_data <- as_tibble(covid_testdata)
+covid_data
+```"

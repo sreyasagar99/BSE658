@@ -1,0 +1,5 @@
+"0","```r
+sum(is.na(covid_testdata$Negative))
+```"
+"1","[1] 7751
+"

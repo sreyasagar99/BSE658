@@ -1,0 +1,12 @@
+"0","```r
+getwd() #current directory
+```"
+"1","[1] \"/Users/takhil/Lab-related/BSE658_chapter2\"
+"
+"0","```r
+list.files() # list all files in the directory
+```"
+"1","[1] \"BSE658_Chapter1.Rmd\"         \"covid_data_copy.csv\"         \"project.Rproj\"              
+[4] \"README.md\"                   \"StatewiseTestingDetails.csv\" \"Tidyverse.nb.html\"          
+[7] \"Tidyverse.Rmd\"               \"using ggplot.Rmd\"            \"using-ggplot.html\"          
+"

@@ -1,0 +1,4 @@
+"0","```r
+# Importing covid testing data 
+covid_testdata <- read.csv('StatewiseTestingDetails.csv')
+```"

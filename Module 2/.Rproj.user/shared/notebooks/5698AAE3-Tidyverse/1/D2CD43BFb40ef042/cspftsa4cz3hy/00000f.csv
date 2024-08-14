@@ -1,0 +1,2 @@
+"0","# Using head function to view first few rows of the data"
+"0","head(covid_testdata)"
