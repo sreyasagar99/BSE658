@@ -1,0 +1,1 @@
+"0","ggplot(data=manystates_data, mapping=aes(x=State,y=Negative))+geom_col()"

@@ -1,0 +1,14 @@
+"0","# Importing covid testing data using tibble read_csv function"
+"0","covid_data <- read_csv('StatewiseTestingDetails.csv')"
+"1","[1mRows: [22m[34m14098[39m [1mColumns: [22m[34m5[39m
+"
+"1","[36m──[39m [1mColumn specification[22m [36m───────────────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m  (1): State
+[32mdbl[39m  (3): TotalSamples, Negative, Positive
+[34mdate[39m (1): Date
+"
+"1","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message.
+"

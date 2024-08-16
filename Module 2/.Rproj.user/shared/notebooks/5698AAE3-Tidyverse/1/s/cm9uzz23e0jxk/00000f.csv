@@ -1,0 +1,3 @@
+"0","covid_data %>%"
+"0","  filter(State == ""Mizoram"") %>%"
+"0","  select(Date, Positive)"

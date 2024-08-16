@@ -1,0 +1,1 @@
+"0","ggplot(state_data) + geom_text(mapping = aes(x=Date, y=Positive, label = Positive))"

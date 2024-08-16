@@ -1,0 +1,3 @@
+"0","state_data = filter(covid_data, State=='Delhi')"
+"0","state_data = arrange(state_data,Date)"
+"0","state_data"

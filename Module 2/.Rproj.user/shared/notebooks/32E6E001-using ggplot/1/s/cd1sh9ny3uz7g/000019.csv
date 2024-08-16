@@ -1,0 +1,8 @@
+"0","manystates_data=filter(covid_data, State==c('Delhi','Karnataka','Tamil Nadu', 'Uttar Pradesh'))"
+"2","Warning:"
+"2"," [38;5;232mThere was 1 warning in `filter()`.[39m
+[38;5;232m[36mℹ[38;5;232m In argument: `State == c(""Delhi"", ""Karnataka"", ""Tamil Nadu"", ""Uttar Pradesh"")`.[39m
+Caused by warning in `State == c(""Delhi"", ""Karnataka"", ""Tamil Nadu"", ""Uttar Pradesh"")`:
+[33m![39m longer object length is not a multiple of shorter object length
+"
+"0","ggplot(data=manystates_data,mapping=aes(x=factor(State),y=Negative))+geom_boxplot()"

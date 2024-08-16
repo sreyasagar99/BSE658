@@ -1,0 +1,2 @@
+"0","## this drops the NA values from all rows"
+"0","covid_data <- na.omit(covid_data)"
