@@ -1,0 +1,7 @@
+"0","labs(title=""Prices Justification of Diamonds"","
+"0","     subtitle=""Prices of over 50,000 round cut diamonds"","
+"0","     x=""Carat"","
+"0","     y=""Price"","
+"0","     color=""Cut type"")+theme_classic()"
+"1","NULL
+"

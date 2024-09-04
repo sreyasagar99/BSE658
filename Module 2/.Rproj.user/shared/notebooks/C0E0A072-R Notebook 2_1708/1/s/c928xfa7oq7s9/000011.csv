@@ -1,0 +1,2 @@
+"0","diffcountry_data=filter(population_data,country==c(""India"",""Bangladesh"",""Pakistan"",""Afghanistan""))"
+"0","ggplot(data=diffcountry_data, mapping=aes(x=factor(country),y=population))+geom_boxplot()"

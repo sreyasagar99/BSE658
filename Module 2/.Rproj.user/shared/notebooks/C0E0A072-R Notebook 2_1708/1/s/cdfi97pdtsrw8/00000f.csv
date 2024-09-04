@@ -1,0 +1,1 @@
+"0","ggplot(country_data, mapping=aes(x=year,y=population))+geom_jitter(width=10,height=10)"

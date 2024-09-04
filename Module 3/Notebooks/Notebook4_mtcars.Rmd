@@ -1,0 +1,356 @@
+---
+title: "R Notebook 4"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+```{r}
+# Installing the lsr package
+#install.packages("lsr")
+```
+
+```{r}
+# Getting the structure of the parenthood
+attach(parenthood)
+str(parenthood)
+```
+```{r}
+library(psych)
+```
+
+```{r}
+# Using describe() for the above data frame
+describe(parenthood)
+```
+```{r}
+head(parenthood,10)
+```
+```{r}
+# A graphical look at the data 
+hist(parenthood$dan.sleep)
+```
+```{r}
+# Plotting for the other 2 variables
+hist(parenthood$baby.sleep)
+hist(parenthood$dan.grump)
+```
+
+```{r}
+# Installing packages "car" and "Rcpp"
+install.packages("car")
+install.packages("Rcpp")
+```
+```{r}
+# Loading the library car and using scatterplot argument to plot baby.sleep and dan.grump variables
+library(car)
+scatterplot( dan.grump ~ dan.sleep, data = parenthood, regLine = FALSE, smooth = FALSE)
+scatterplot
+```
+```{r}
+# Plotting a scatter plot for baby.sleep and dan.grump variables
+scatterplot( dan.grump ~ baby.sleep, data = parenthood, regLine = FALSE, smooth = FALSE)
+scatterplot
+```
+
+```{r}
+# Loading library ggplot2
+library(ggplot2)
+# Basic scatter plot
+ggplot(parenthood, aes(x = dan.sleep, y = dan.grump)) + geom_point() + geom_point() + geom_smooth()
+```
+```{r}
+# Plotting a scatter plot for baby.sleep and dan.grump variables
+ggplot(parenthood, aes(x = baby.sleep, y = dan.grump)) + geom_point()
+```
+```{r}
+#Plotting baby.sleep and dan.sleep
+scatterplot( baby.sleep ~ dan.sleep, data = parenthood, regLine = FALSE, smooth = FALSE)
+scatterplot
+```
+
+```{r}
+# Finding correlation between dan.sleep and dan.grump 
+cor(x = parenthood$dan.sleep, y = parenthood$dan.grump)
+```
+```{r}
+# Giving the entire data frame 'parenthood' as input in cor()
+cor(parenthood)
+```
+
+```{r}
+# Correlating all pairs of variables in "parenthood":
+cor( x = parenthood )
+```
+```{r}
+# Interpreting a correlation
+knitr::kable(
+rbind(
+c("-1.0 to -0.9" ,"Very strong", "Negative"),
+c("-0.9 to -0.7", "Strong", "Negative") ,
+c("-0.7 to -0.4", "Moderate", "Negative") ,
+c("-0.4 to -0.2", "Weak", "Negative"),
+c("-0.2 to 0","Negligible", "Negative") ,
+c("0 to 0.2","Negligible", "Positive"),
+c("0.2 to 0.4", "Weak", "Positive"), 
+c("0.4 to 0.7", "Moderate", "Positive"), 
+c("0.7 to 0.9", "Strong", "Positive"), 
+c("0.9 to 1.0", "Very strong", "Positive")), col.names=c("Correlation", "Strength", "Direction"),
+  booktabs = TRUE)
+```
+```{r}
+# Installing the package ggcorrplot
+install.packages("ggcorrplot")
+```
+# Correlational study on "parenthood" data
+```{r}
+# Loading the library ggcorrplot
+library(ggcorrplot)
+```
+```{r}
+#Computing a correlation matrix
+corr_ph <- round(cor(parenthood), 1)
+corr_ph
+```
+```{r}
+# Computing a correlation matrix of p-values
+pmat_ph <-cor_pmat(parenthood)
+pmat_ph
+```
+```{r}
+# Plotting the correlation matrix
+ggcorrplot(corr_ph)
+```
+```{r}
+# Plotting the correlation matrix using the method = "circle"
+ggcorrplot(corr_ph, method = "circle")
+```
+```{r}
+# Getting the lower half of the matrix
+ggcorrplot(corr_ph, hc.order = TRUE, type = "lower",
+   lab = TRUE)
+```
+
+## Using the data anscombesquartet.Rdata
+```{r}
+#Loading the anscombesquartet.Rdata
+#load( "anscombesquartet.Rdata" )
+cor( X1, Y1 )
+cor( X2, Y2 )
+cor (X3, Y3)
+cor (X4, Y4)
+```
+```{r}
+#Scatterplot of multiple variables from anscombsquartet.Rdata
+scatterplot(x = X1, y = Y1,regLine = FALSE, smooth = FALSE)
+scatterplot(x = X2, y = Y2,regLine = FALSE, smooth = FALSE)
+scatterplot(x = X3, y = Y3,regLine = FALSE, smooth = FALSE)
+scatterplot(x = X4, y = Y4,regLine = FALSE, smooth = FALSE)
+```
+
+## Using the data effort.Rdata 
+```{r}
+# Loading data effort.Rdata
+# load("effort.Rdata")
+```
+```{r}
+# Finding the correlation between hours and grade from effort data
+effort
+cor( effort$hours, effort$grade )
+```
+```{r}
+# Scatterplot of hours and grade
+scatterplot(effort$hours, effort$grade, regLine = TRUE, smooth = FALSE)
+```
+```{r}
+hours.rank <- rank( effort$hours )   # rank students by hours worked
+grade.rank <- rank( effort$grade )   # rank students by grade received
+# cor() function for these
+cor( hours.rank, grade.rank )
+```
+```{r}
+#Execute this and compare with the correlation coefficient we got above
+cor( effort$hours, effort$grade, method = "spearman")
+```
+
+##### Handling missing values
+```{r}
+partial <- c(10, 20, NA, 30)
+```
+```{r}
+median(partial, na.rm = TRUE)
+```
+```{r}
+sleep <- c(NA, 9,10)
+grump <- c(70, NA, 30)
+```
+```{r}
+cor(sleep,grump)
+```
+## Handling missing values
+## Using parenthood2.Rdata
+```{r}
+#load( "parenthood2.Rdata" )
+print( parenthood2 )
+describe( parenthood2 ) 
+#Check how many missing values are there for each variable - compare the values in 'n' with the number of days.
+```
+```{r}
+cor(parenthood2)
+```
+```{r}
+cor(parenthood2, use = "complete.obs")
+cor(parenthood2, use = "pairwise.complete.obs")
+```
+
+## Correlational study on "mtcars" data
+```{r}
+library(ggcorrplot)
+```
+```{r}
+# Computing a correlation matrix
+data(mtcars)
+corr <- round(cor(mtcars), 1)
+head(corr[, 1:6])
+```
+```{r}
+# Computing a matrix of correlation p-values
+p.mat <- cor_pmat(mtcars)
+head(p.mat[, 1:4])
+```
+```{r}
+# Visualizing the correlation matrix using method = "square" (default)
+ggcorrplot(corr)
+```
+```{r}
+# Visualizing the correlation matrix using method = "circle"
+ggcorrplot(corr, method = "circle")
+```
+```{r}
+# Reordering the correlation matrix using hierarchical clustering
+ggcorrplot(corr, hc.order = TRUE, outline.col = "white")
+```
+```{r}
+# Types of correlogram layout: Getting the lower triangle
+ggcorrplot(corr, hc.order = TRUE, type = "lower",
+     outline.col = "white")
+```
+```{r}
+# Getting the upper triangle
+ggcorrplot(corr, hc.order = TRUE, type = "upper",
+     outline.col = "white")
+```
+```{r}
+# Changing colors and theme using Argument colors and ggtheme
+ggcorrplot(corr, hc.order = TRUE, type = "lower",
+   outline.col = "white",
+   ggtheme = ggplot2::theme_gray,
+   colors = c("#6D9EC1", "white", "#E46726"))
+```
+```{r}
+# Adding correlation coefficients using argument lab = TRUE
+ggcorrplot(corr, hc.order = TRUE, type = "lower",
+   lab = TRUE)
+```
+```{r}
+# Adding correlation significance level using Argument p.mat
+# Barring the no significant coefficient
+ggcorrplot(corr, hc.order = TRUE,
+    type = "lower", p.mat = p.mat)
+```
+```{r}
+# Leaving blank on no significant coefficient
+ggcorrplot(corr, p.mat = p.mat, hc.order = TRUE,
+    type = "lower", insig = "blank")
+```
+
+## Correlational study on "msleep" data
+```{r}
+# Loading data "msleep"
+data(msleep)
+msleep
+```
+```{r}
+# Loading the library dplyr, ggplot2, and tidyverse
+library(dplyr)
+library(ggplot2)
+library(tibble)
+library(tidyverse)
+```
+```{r}
+# Dropping the NA values from all rows
+msleep <- na.omit(msleep)
+msleep
+```
+```{r}
+# Selecting the columns having integer value in the data set
+msleep_dt<-msleep %>%
+  select(sleep_total,sleep_rem, sleep_cycle,awake,brainwt,bodywt)
+msleep_dt
+```
+
+```{r}
+# Computing a correlation matrix
+corr_msleep <- round(cor(msleep_dt), 1)
+head(corr_msleep[, 1:6])
+```
+```{r}
+# Computing a matrix of correlation p-values
+pmat_msleep <- cor_pmat(msleep_dt)
+head(pmat_msleep[, 1:6])
+```
+```{r}
+# Visualizing the correlation matrix using method = "square" (default)
+ggcorrplot(corr_msleep)
+```
+```{r}
+# Visualizing the correlation matrix using method = "circle"
+ggcorrplot(corr_msleep, method = "circle")
+```
+```{r}
+# Reordering the correlation matrix using hierarchical clustering
+ggcorrplot(corr_msleep, hc.order = TRUE, outline.col = "white")
+```
+```{r}
+# Types of correlogram layout: Getting the lower triangle
+ggcorrplot(corr_msleep, hc.order = TRUE, type = "lower",
+     outline.col = "white")
+```
+```{r}
+# Getting the upper triangle
+ggcorrplot(corr_msleep, hc.order = TRUE, type = "upper",
+     outline.col = "white")
+```
+```{r}
+# Changing the colors and theme of correlogram using Argument  ggtheme and colors
+ggcorrplot(corr_msleep, hc.order = TRUE, type = "lower",
+   outline.col = "white",
+   ggtheme = ggplot2::theme_gray,
+   colors = c("lavender", "turquoise", "darkblue"))
+```
+```{r}
+# Adding correlation coefficients using argument lab = TRUE
+ggcorrplot(corr_msleep, hc.order = TRUE, type = "lower",
+   lab = TRUE)
+```
+```{r}
+# Adding correlation coefficients using argument lab = TRUE,and with different colour gradient
+ggcorrplot(corr_msleep, hc.order = TRUE, type = "lower",
+   lab = TRUE,
+   outline.col = "white",
+   ggtheme = ggplot2::theme_gray,
+   colors = c("lavender", "turquoise", "darkblue"))
+```
+```{r}
+# Adding correlation significance level using Argument p.mat
+# Barring the no significant coefficient
+ggcorrplot(corr_msleep, hc.order = TRUE,
+    type = "lower", p.mat = pmat_msleep)
+```
+```{r}
+# Leaving blank on no significant coefficient
+ggcorrplot(corr_msleep, p.mat = pmat_msleep, hc.order = TRUE, type="lower", insig = "blank")
+```

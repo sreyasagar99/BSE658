@@ -34,12 +34,14 @@ That's a lot of theory, let's dive into some data now.
 
 ```{r}
 #Change the path according to your PC
-path = "/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/"
-fileN ="aflsmall.Rdata"
-file_path = paste(path,fileN, sep = "")
-load(file_path)
-library(lsr)
-who()
+#path = "/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/"
+#file_path = paste(path,fileN, sep = "")
+#path="/GitHub/BSE658/Module 3/Notebooks/"
+#fileN ="aflsmall.Rdata"
+#load(file_path)
+#library(lsr)
+#who()
+load("aflsmall.Rdata")
 ```
 
 As you can see there are multiple variables of different class and size. 
@@ -76,6 +78,19 @@ Try finding the skewness for the above data for afl.margins using skew() functio
 library(psych)
 #Try finding skewness of afl.margins here
 ```
+```{r}
+summary(afl.margins)
+```
+```{r}
+describe(afl.margins)
+```
+```{r}
+blowouts<-(afl.margins>50)
+blowouts
+```
+```{r}
+summary(blowouts)
+```
 
 Although such a graphical representation gives a 'gist' of the data but it is useful to find some "summary" statistics as well.
 
@@ -103,6 +118,18 @@ The second measure is the median. It is just the middle value of a set of observ
 Probably you mentally arranged these numbers in ascending order first and then found the middle value. If there were a list of numbers like this `8, 14, 31, 32, 56, 56` . You will then find the average of middle 2 values. 
 
 Now try finding out the median for afl.margins.
+```{r}
+a <-c(35,40,45,50,55)
+sum(a)/length(a)
+mean(a)
+median(a)
+min(a)
+max(a)
+range(a)
+IQR(a)
+var(a)
+sd(a)
+```
 
 ```{r}
 #afl.median = 
@@ -243,12 +270,21 @@ Let's try out summarizing a dataframe as well.
 load("clinicaltrial.Rdata")
 #Check the name of the variable in the environment which contains the dataframe and try summarizing it
 ```
+```{r}
+head(clin.trial)
+```
+```{r}
+summary(clin.trial)
+```
 
 The `psych` package also has a function called `describe()` for dataframes. Don't forget to check it out too!
 
 In fact, you can also describe these statistics group wise. 
 
 For instance, run `describeBy( x=clin.trial, group=clin.trial$therapy )`
+```{r}
+describe(clin.trial)
+```
 
 ```{r}
 describeBy( x=clin.trial, group=clin.trial$therapy )
@@ -263,13 +299,14 @@ Try running the following chunk and compare the results with the `describeBy()` 
 by(data=clin.trial, INDICES=clin.trial$therapy, FUN=describe)
 #Also try replacing describe in FUN above with summary
 ```
+```{r}
+by(data=clin.trial, INDICES=clin.trial$therapy, FUN=summary)
+```
 
 What if you have multiple grouping variables? Suppose, for example, you would like to look at the average mood gain separately for all possible combinations of drug and therapy.We can use `aggregate()` command.
 
 ```{r}
-aggregate( formula = mood.gain ~ drug + therapy, 
-           data = clin.trial,
-           FUN = mean) 
+aggregate(mood.gain ~ drug + therapy, data = clin.trial, FUN = mean) 
 #1 mood.gain by drug/therapy combination
 #2 data is in the clin.trial data frame
 #3 print out group means

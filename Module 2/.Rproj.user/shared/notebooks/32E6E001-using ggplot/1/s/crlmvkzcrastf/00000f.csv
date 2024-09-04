@@ -1,0 +1,13 @@
+"0","plot1 <- ggplot(state_data) + geom_point(mapping = aes(x=Date, y=TotalSamples))"
+"0","plot2 <- ggplot(state_data) + geom_point(mapping = aes(x=Date, y=Positive))"
+"0","library(gridExtra)"
+"2","
+Attaching package: ‘gridExtra’
+
+"
+"2","The following object is masked from ‘package:dplyr’:
+
+    combine
+
+"
+"0","grid.arrange(plot1, plot2, ncol = 2)"

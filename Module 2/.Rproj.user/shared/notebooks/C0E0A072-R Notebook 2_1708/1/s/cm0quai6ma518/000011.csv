@@ -1,0 +1,3 @@
+"0","country_data=filter(population_data, country==""India"")"
+"0","countery_data=arrange(country_data,year)"
+"0","country_data"

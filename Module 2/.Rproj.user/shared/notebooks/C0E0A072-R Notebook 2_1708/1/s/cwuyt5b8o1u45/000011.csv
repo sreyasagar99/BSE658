@@ -1,0 +1,1 @@
+"0","ggplot(country_data)+geom_text(mapping=aes(x=year,y=population,label=year))"

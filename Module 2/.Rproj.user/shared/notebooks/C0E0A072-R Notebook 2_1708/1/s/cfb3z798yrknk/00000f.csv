@@ -1,0 +1,2 @@
+"0","newpopdata<-mutate(population_data,npop=population/1000)"
+"0","newpopdata"

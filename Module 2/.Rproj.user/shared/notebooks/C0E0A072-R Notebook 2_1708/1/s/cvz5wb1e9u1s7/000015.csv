@@ -1,0 +1,1 @@
+"0","ggplot(country_data,mapping=aes(x=population))+geom_histogram(bins=5, color=""turquoise"",fill=""maroon"")"

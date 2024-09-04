@@ -63,19 +63,35 @@ _Reference: Chapter 5, Winter B._
 #### Correlation
 
 So far we have focused entirely on how to construct descriptive statistics for a single variable. We haven’t talked about how to describe the relationships between variables in the data. To do that, we want to talk mostly about the correlation between variables.
+```{r}
+install.packages("lsr")
+```
 
 ```{r}
-setwd("/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/")
+#setwd("/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/")
 
 #Let's load some data
-load( "parenthood.Rdata" )
-who(TRUE)
+load("parenthood.Rdata")
+#str(parenthood)
+#who(TRUE)
+```
+```{r}
+str(parenthood)
+```
+```{r}
+library(psych)
+```
+```{r}
+attach(parenthood)
 ```
 
 ```{r}
-#Try describe() for the above dataframe
+#Try describe() for the above data frame
+describe(parenthood)
 ```
-
+```{r}
+head(parenthood,10)
+```
 
 ```{r}
 #Let's also take a graphical look at the data 
@@ -111,6 +127,18 @@ scatterplot
 
 ```{r}
 #Plot a scatter plot for baby.sleep and dan.grump variables
+scatterplot( dan.grump ~ baby.sleep, data = parenthood, regLine = FALSE, smooth = FALSE)
+scatterplot
+```
+```{r}
+library(ggplot2)
+# Basic scatter plot
+ggplot(parenthood, aes(x = dan.sleep, y = dan.grump)) + geom_point() + geom_point() + geom_smooth()
+```
+
+```{r}
+#Plot a scatter plot for baby.sleep and dan.grump variables
+ggplot(parenthood, aes(x = baby.sleep, y = dan.grump)) + geom_point()
 ```
 
 
@@ -120,6 +148,8 @@ But what about the plot between baby.sleep and dan.sleep?
 
 ```{r}
 #Plot baby sleep and dan sleep here
+scatterplot( baby.sleep ~ dan.sleep, data = parenthood, regLine = FALSE, smooth = FALSE)
+scatterplot
 ```
 
 Is the direction of this plot same as the earlier plots? What about strength?
@@ -163,6 +193,30 @@ cor(x = parenthood$dan.sleep, y = parenthood$dan.grump)
 
 #Try giving the entire dataframe 'parenthood' as input in cor()
 ```
+```{r}
+#correlate all pairs of variables in "parenthood":
+cor( x = parenthood )
+```
+```{r}
+# Interpreting a correlation
+knitr::kable(
+rbind(
+c("-1.0 to -0.9" ,"Very strong", "Negative"),
+c("-0.9 to -0.7", "Strong", "Negative") ,
+c("-0.7 to -0.4", "Moderate", "Negative") ,
+c("-0.4 to -0.2", "Weak", "Negative"),
+c("-0.2 to 0","Negligible", "Negative") ,
+c("0 to 0.2","Negligible", "Positive"),
+c("0.2 to 0.4", "Weak", "Positive"), 
+c("0.4 to 0.7", "Moderate", "Positive"), 
+c("0.7 to 0.9", "Strong", "Positive"), 
+c("0.9 to 1.0", "Very strong", "Positive")), col.names=c("Correlation", "Strength", "Direction"),
+  booktabs = TRUE)
+```
+```{r}
+
+```
+
 
 What did you find?
 
@@ -171,6 +225,30 @@ What did you find?
 It really depends on what you want to use the data for, and on how strong the correlations in your field tend to be.
 
 ![Correlation coefficient interpretation table](/Users/lenovo1/Desktop/mtech/courses/stats/Images/fig5.png)
+```{r}
+install.packages("ggcorrplot")
+```
+```{r}
+library(ggcorrplot)
+```
+```{r}
+corr <- round(cor(parenthood), 1)
+corr
+```
+```{r}
+p.mat <- cor_pmat(parenthood)
+p.mat
+```
+```{r}
+ggcorrplot(corr)
+```
+```{r}
+ggcorrplot(corr, method = "circle")
+```
+```{r}
+ggcorrplot(corr, hc.order = TRUE, type = "lower",
+   lab = TRUE)
+```
  
 Now let's take a look at this data called "Anscombe's Quartet"
  
@@ -181,13 +259,15 @@ cor( X2, Y2 )
 cor (X3, Y3)
 cor (X4, Y4)
 ```
-
 Were the correlation coefficients same?
 
 Now try plotting them.
 
 ```{r}
-scatterplot()
+scatterplot(x = X1, y = Y1,regLine = FALSE, smooth = FALSE)
+scatterplot(x = X2, y = Y2,regLine = FALSE, smooth = FALSE)
+scatterplot(x = X3, y = Y3,regLine = FALSE, smooth = FALSE)
+scatterplot(x = X4, y = Y4,regLine = FALSE, smooth = FALSE)
 ```
 
 Therefore, remember to always look at the scatterplot before attaching any interpretation to the data!
@@ -199,7 +279,7 @@ If we have to properly define the role of Pearson's coefficient, we can say that
 But let's take a look at another dataset and find correlation between its variables.
 
 ```{r}
-setwd("/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/")
+#setwd("/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/")
 load( "effort.Rdata" )
 effort
 cor( effort$hours, effort$grade )
@@ -228,6 +308,45 @@ Now the correlation coefficient we get is different from the Perason's correlati
 ```{r}
 #Execute this and compare with the correlation coefficient we got above
 cor( effort$hours, effort$grade, method = "spearman")
+```
+##### the correlate() function
+Try using this function to find the relationship between several variables in a dataframe at once even if some of them are not numeric!
+
+```{r}
+load("work.Rdata")
+head(work)
+```
+```{r}
+#cor(work)
+```
+```{r}
+#correlate(work)
+```
+Or if you want to use the Spearman method
+```{r}
+#correlate( work, corr.method="spearman" )
+```
+
+
+##### Handling missing values
+
+We've seen in earlier lectures that there could be missing values in data which are represented by `NA` in R. One easy way to remove them is using `na.rm = TRUE` as argument in many functions.
+
+But what if we have missing values in a dataframe where we have to find correlations across variables.
+
+Let's look at such a dataset.
+
+```{r}
+partial <- c(10, 20, NA, 30)
+
+```
+
+```{r}
+median(partial, na.rm = TRUE)
+```
+```{r}
+sleep <- c(NA, 9,10)
+grump <- c(70, NA, 30)
 ```
 
 ##### Handling missing values

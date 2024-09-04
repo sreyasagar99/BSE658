@@ -1,0 +1,1 @@
+"0","ggplot(data=diffcountry_data, mapping=aes(x=population))+geom_histogram(bins=4,color=""steelblue"",fill=""turquoise2"")+facet_wrap(~country,nrow=3)"
